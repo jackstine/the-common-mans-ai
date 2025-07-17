@@ -1,0 +1,41 @@
+- talk about Claude Code and give an overview of it.
+	- how did it change you mind on things.
+	- it has kept me up at night.
+	- I found this a couple of weeks ago, and im just amazed.
+	- Demo ask the audience...
+		- Keep it to web applications, or terminal or back end (no databases all in-memory)
+- How did we get here?
+	- [[workflows.excalidraw]]
+- Prompting
+	- keep your prompts large, and focused.
+	- use Chain of Thought
+	- Few Shot Prompting vs Zero Shot
+	- Prompt Chaining
+	- Self-Consistency
+	- Ask it to think, or step by step prompting
+	- Tree of Thought
+		- AIs use their answer to make their answers
+- How can we scope out a project with agents?
+	- [[Project outline.excalidraw]]
+- Things that you need to know
+	- Costs?  Reducing the cost of theses services.
+		- The cost we pay today, will go up as adopting occurs.
+		- reduce cost by keeping documentation
+			- github descriptions
+			- documentation
+			- comments in code (updated, use comment extractors)
+			- saving your sessions
+				- using specialized pertrained agents.
+	- Context Windowing.
+		- [[context-windows-draw.excalidraw]]
+- What does this mean for us?
+	- Code Reviewers
+	- Refactoring is going to be more important.
+	- microservers are going to be more important (domain specific) and low coupling.
+	- Architecture of the System is going to be important
+	- Agent builders
+- Tools
+	- Tmux
+	- Git Worktrees
+	- Diction (for Macs)
+	- MCPs context7

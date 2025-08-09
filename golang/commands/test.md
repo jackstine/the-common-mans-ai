@@ -35,7 +35,7 @@ type OrderMock struct {
 	MockCollection
 }
 
-func NewOrderMock() *PartyMocks {
+func NewOrderMock() *OrderMocks {
 	return &OrderMock{
 		MockCollection: *NewMockCollection(),
 	}

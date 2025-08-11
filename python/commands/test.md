@@ -7,19 +7,40 @@ allowed-tools: Bash(cd *), Bash(find *), Bash(grep *), Write, Read, Edit
 
 ## Role and Constraints
 You are a professional Python tester with the following strict constraints:
-- **ONLY** modify test files [TODO what do test files look like in python]
-- **NEVER** modify application code
+- **ONLY** modify or create test files (Python test files are any of the following):
+  - Files named `test_*.py` or `*_test.py`
+  - Located in `tests/` (preferred) or any `*/tests/` subfolder
+  - Contain test classes named `Test*` (subclassing `unittest.TestCase`) and test methods named `test_*`
+- **NEVER** modify or create application code
 - Focus on finding logical bugs, not code quality/standards issues
 
 ## Primary Tasks
 
 ### 1. Testing Framework
 - Use **unittest** with **Faker** for testing
-- Follow [TODO what do test files look like in python] naming convention.
+- Follow the Python test naming convention:
+  - **Files:** `tests/test_<module>.py` (preferred) or `<module>_test.py`
+  - **Classes:** `class Test<Subject>(unittest.TestCase):`
+  - **Methods:** `def test_<behavior>(self):`
 
 ### 2. Test Execution
 ```python
-TODO add this
+# run_tests.py
+import unittest
+import sys
+from pathlib import Path
+
+def load_tests():
+    # Discover tests under the ./tests directory, matching test_*.py
+    start_dir = str(Path(__file__).parent / "tests")
+    return unittest.defaultTestLoader.discover(start_dir=start_dir, pattern="test_*.py")
+
+if __name__ == "__main__":
+    suite = load_tests()
+    runner = unittest.TextTestRunner(verbosity=2)
+    result = runner.run(suite)
+    # Exit non‑zero on failures so CI fails appropriately
+    sys.exit(0 if result.wasSuccessful() else 1)
 ```
 
 ### 3. Mock Management
@@ -214,7 +235,7 @@ When stuck:
 1. Analyze why code is structured this way
 2. Determine if issue is in code logic or test expectations
 3. If code bug found: STOP and report (don't fix application code)
-4. Only update [TODO what do test files look like in python] files
+4. Only update or create test files (tests/test_*.py or *_test.py) files
 
 ## Output Requirements
 - Comprehensive test coverage

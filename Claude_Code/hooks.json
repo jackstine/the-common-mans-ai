@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/capture_hooks.py --event=pretool --input-file=/tmp/pretooluse-hook-input.json --config=~/.claude/hook_config.json"
+            "command": "python3 ~/.claude/capture_hooks.py --event=pretool --config=~/.claude/hook_config.json"
           }
         ]
       }
@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/capture_hooks.py --event=posttool --input-file=/tmp/posttooluse-hook-input.json --config=~/.claude/hook_config.json"
+            "command": "python3 ~/.claude/capture_hooks.py --event=posttool --config=~/.claude/hook_config.json"
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/capture_hooks.py --event=notification --input-file=/tmp/notification-hook-input.json --config=~/.claude/hook_config.json"
+            "command": "python3 ~/.claude/capture_hooks.py --event=notification --config=~/.claude/hook_config.json"
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/capture_hooks.py --event=UserPromptSubmit --finalize-settings --config=~/.claude/hook_config.json"
+            "command": "python3 ~/.claude/capture_hooks.py --event=UserPromptSubmit --config=~/.claude/hook_config.json"
           }
         ]
       }
@@ -50,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/capture_hooks.py --event=stop --finalize-settings --config=~/.claude/hook_config.json"
+            "command": "python3 ~/.claude/capture_hooks.py --event=stop --config=~/.claude/hook_config.json"
           }
         ]
       }

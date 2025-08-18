@@ -1,0 +1,14 @@
+Bash
+Glob
+Grep
+LS
+Read
+Edit
+MultiEdit
+Write
+NotebookEdit
+WebFetch
+TodoWrite
+WebSearch
+BashOutput 
+KillBash  

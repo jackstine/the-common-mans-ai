@@ -100,7 +100,7 @@ type OrderBuilder struct {
 func (ob *OrderBuilder) Build() *core.Order {
 	return pb.party
 }
-// CreateLedgerParty will create a random generic Ledger Party
+// CreateSimpleOrder will create a random generic Ledger Party
 func (ob *OrderBuilder) CreateSimpleOrder() *OrderBuilder {
 	// note the same accountID for both accountID and out bound payment proxy ID
 	accountId := uuid.New().String()

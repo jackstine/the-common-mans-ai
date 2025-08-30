@@ -25,7 +25,7 @@ claude-flow.bat
 claude-flow.ps1
 hive-mind-prompt-*.txt
 # removing claude and claude-flow folders for now
-./.claude/
+/.claude
 .claude-flow
 .roo
 .roomodes

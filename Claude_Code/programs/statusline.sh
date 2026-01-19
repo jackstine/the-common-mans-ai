@@ -11,8 +11,9 @@ if [ -t 0 ]; then
 else
     # Read JSON from stdin
     JSON_INPUT=$(cat)
+    # for when we need to test or see the output from Claude Code
     # keep commented for testing
-    echo $JSON_INPUT
+    # echo $JSON_INPUT
     if [ -n "$JSON_INPUT" ]; then
         # Use jq to extract model display name and cost
         MODEL=$(echo "$JSON_INPUT" | jq -r '.model.display_name // "unknown"')
@@ -52,28 +53,38 @@ rainbow_rgb() {
     echo "$rgb"
 }
 
-# Calculate context percentage from JSON input
-get_context_percentage() {
+# Calculate context usage from JSON input
+get_context_info() {
     if [ -n "$JSON_INPUT" ]; then
-        # Extract input tokens (regular + cached) using jq
-        local input_tokens=$(echo "$JSON_INPUT" | jq -r '(.usage.input_tokens // 0) + (.usage.cache_read_input_tokens // 0)' 2>/dev/null)
-        
+        # Extract all token counts using jq
+        local input_tokens=$(echo "$JSON_INPUT" | jq -r '.context_window.current_usage.input_tokens // 0' 2>/dev/null)
+        local output_tokens=$(echo "$JSON_INPUT" | jq -r '.context_window.current_usage.output_tokens // 0' 2>/dev/null)
+        local cache_creation_tokens=$(echo "$JSON_INPUT" | jq -r '.context_window.current_usage.cache_creation_input_tokens // 0' 2>/dev/null)
+        local cache_read_tokens=$(echo "$JSON_INPUT" | jq -r '.context_window.current_usage.cache_read_input_tokens // 0' 2>/dev/null)
+        local context_window_size=$(echo "$JSON_INPUT" | jq -r '.context_window.context_window_size // 200000' 2>/dev/null)
+
         if [ -n "$input_tokens" ] && [ "$input_tokens" -gt 0 ]; then
-            # Calculate used percentage against 200K limit
-            local context_used_pct=$(echo "scale=0; $input_tokens * 100 / 200000" | bc)
-            local context_remaining_pct=$(echo "scale=0; 100 - $context_used_pct" | bc)
-            echo "${context_remaining_pct}"
+            # Calculate total used context (including all cache tokens)
+            local used_context=$(echo "$input_tokens + $output_tokens + $cache_creation_tokens + $cache_read_tokens" | bc)
+
+            # Convert to thousands (K)
+            local used_context_k=$(echo "scale=0; $used_context / 1000" | bc)
+
+            # Calculate used percentage
+            local used_percentage=$(echo "scale=1; $used_context * 100 / $context_window_size" | bc)
+
+            echo "📦 ${used_context_k}K ${used_percentage}% CTX"
         else
-            echo "TBD"
+            echo "📦 TBD"
         fi
     else
-        echo "TBD"
+        echo "📦 TBD"
     fi
 }
 
 # Build the full string
-CONTEXT_PCT=$(get_context_percentage)
-FULL_STR="${DIRNAME} ${MODEL} \$${COST} ${CONTEXT_PCT}% ctx"
+CONTEXT_INFO=$(get_context_info)
+FULL_STR="${DIRNAME} ${MODEL} \$${COST} ${CONTEXT_INFO}"
 STRING_LENGTH=${#FULL_STR}
 
 # Build output with gradient
